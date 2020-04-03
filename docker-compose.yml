@@ -1,0 +1,15 @@
+version: "3"
+services:
+  frontend:
+    restart: unless-stopped
+    image: certbot
+    ports:
+      - 80:80/tpc
+      - 443:443/tpc
+    environment:
+      CERTBOT_EMAIL: ${EMAIL}
+      ENVSUBST_VARS: FQDN
+      FQDN: ${DOMAIN}
+    volumes:
+      - ./example/conf.d:/etc/nginx/user.conf.d:ro
+      - ./certs:/etc/letsencrypt
